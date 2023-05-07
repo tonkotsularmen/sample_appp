@@ -11,8 +11,14 @@ class UsersController < ApplicationController
   def create
     # (user + given params).save
     # User.create(params[:user])
-    User.create(user_params)
     # => name, email, pass/confirmation
+    @user = User.new(user_params)
+    if @user.save
+      #Success
+    else 
+      #Failure
+      render 'new'
+    end 
   end
   
   private#ここより上はやろうと思えば外側のコントローラからもアクセスできる。ここより下はこのファイルの中でしかアクセスできない。

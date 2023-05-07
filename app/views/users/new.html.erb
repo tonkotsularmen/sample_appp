@@ -4,17 +4,18 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(model: @user, local: true) do |f| %><!--form_withでフォームを作りますと宣言、どのモデルを対象にしてますよと宣言-->
-      <%= f.label :name %>　　　　　　　　　　　　　　<!--=>userモデルに特化したパラメーターを作りますと宣言している-->
-      <%= f.text_field :name %>
+      <%= render 'shared/error_messages'%>            <!--=>userモデルに特化したパラメーターを作りますと宣言している-->
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
 
       <%= f.label :email %>
-      <%= f.email_field :email %>
+      <%= f.email_field :email, class: 'form-control' %>
 
       <%= f.label :password %>
-      <%= f.password_field :password %>
+      <%= f.password_field :password, class: 'form-control' %>
 
       <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
 
       <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
