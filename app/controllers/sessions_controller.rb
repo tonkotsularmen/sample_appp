@@ -22,4 +22,11 @@ class SessionsController < ApplicationController
       #              => render 'new'(0回目)
     end
   end
+  
+  # DELETE /logout
+  def destroy
+    log_out
+    redirect_to root_url#root_pathでもいい。慣習的にはroot_url
+  end 
+  
 end
