@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :logged_in_user, only: [:edit, :update]
+  before_action :correct_user,   only: [:edit, :update]
+  
   # GET /users/:id GETリクエストが/users/:idに来た時
   def show
     @user = User.find(params[:id])
@@ -28,10 +31,45 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/:id/edit
+  def edit#PATCHリクエストを送るためのフォームを生成するためのページ
+    @user = User.find(params[:id])# => app/views/users/edit.html.erb
+  end
+
+  # PATCH /users/:id
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      # 更新に成功した場合を扱う。
+      flash[:success] = "Profile updated"
+      redirect_to @user
+    else
+      #@user.errors <== ここにデータが入っている。ここにデータをセットしたままeditテンプレート呼び出している。
+      render 'edit'
+    end
+  end
+
+
   private#ここより上はやろうと思えば外側のコントローラからもアクセスできる。ここより下はこのファイルの中でしかアクセスできない。
 
-  def user_params
-      params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
-  end
+    def user_params
+        params.require(:user).permit(:name, :email, :password,
+                                     :password_confirmation)
+    end
+
+    # ログイン済みユーザーかどうか確認
+    def logged_in_user
+      unless logged_in?
+        store_location
+        flash[:danger] = "Please log in."
+         redirect_to login_url
+      end
+    end
+    
+    # 正しいユーザーかどうか確認
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user? @user
+    end
+    
 end
