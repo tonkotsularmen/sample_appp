@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       # Success
       log_in user
+      remember user
       redirect_to user
     else
       # Failure
@@ -22,11 +23,11 @@ class SessionsController < ApplicationController
       #              => render 'new'(0回目)
     end
   end
-  
+
   # DELETE /logout
   def destroy
-    log_out
+    log_out if logged_in?
     redirect_to root_url#root_pathでもいい。慣習的にはroot_url
-  end 
-  
+  end
+
 end
