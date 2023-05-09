@@ -35,6 +35,13 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
+  
+  # '/account_activation/:token/edit?email=foo@bar.com'
+  host = '6b6ac73d9d2d45a6acab84d1c1204374.vfs.cloud9.ap-northeast-1.amazonaws.com'
+  # ここをコピペすると失敗します。
+  # 自分の環境のホストに変えてください。
+  # クラウドIDEの場合は以下をお使いください
+  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
 
   config.action_mailer.perform_caching = false
 
