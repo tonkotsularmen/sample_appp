@@ -1,5 +1,6 @@
 class Micropost < ApplicationRecord
   belongs_to :user
+  # Default => foreign_key: user_id
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }
   validates :user_id, presence: true
